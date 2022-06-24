@@ -1,5 +1,4 @@
-+++ title = "About" +++
-
+title: "About"
 ### About   
   ‎  
 links:  
