@@ -8,7 +8,7 @@ pygmentsCodeFences = true
 pygmentsUseClasses = true
 
 [params]
-  dark = "off"
+  dark = "auto"
   homepage = "https://torrytw.ooo"
   description = "internet website"
   tags = ["web", "site"]
