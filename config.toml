@@ -1,4 +1,5 @@
 baseURL = "https://torrytw.ooo"
+publishDir = "docs"
 title = "torry2"
 theme = "etch"
 languageCode = "en"
@@ -7,14 +8,14 @@ pygmentsCodeFences = true
 pygmentsUseClasses = true
 
 [params]
-  description = "internet website"
-  copyright = "Copyright © 2022 torrytwooo"
   dark = "off"
-  highlight = true
-  tags = ["web", "site"]
-  license = "The Unlicense"
   homepage = "https://torrytw.ooo"
-  licenselink = "https://example.com"
+  description = "internet website"
+  tags = ["web", "site"]
+  highlight = true
+  copyright = "Copyright © 2022 torrytwooo"
+  license = "The Unlicense"
+  licenselink = "https://github.com/torry2/torry2.github.io/blob/main/LICENSE"
 
 [taxonomies]
     tag = "tags"
@@ -45,10 +46,10 @@ pygmentsUseClasses = true
   posts = "/:title/"
 
 [markup.goldmark.renderer]
-  # Allows HTML in Markdown
+  # html enabled in md
   unsafe = true
   
   
-  [author]
+[author]
   name = "torrytwooo"
   homepage = "https://torrytw.ooo"
