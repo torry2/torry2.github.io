@@ -1,0 +1,54 @@
+baseURL = "https://torrytw.ooo"
+title = "torry2"
+theme = "etch"
+languageCode = "en"
+enableInlineShortcodes = true
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+
+[params]
+  description = "internet website"
+  copyright = "Copyright © 2022 torrytwooo"
+  dark = "off"
+  highlight = true
+  tags = ["web", "site"]
+  license = "The Unlicense"
+  homepage = "https://torrytw.ooo"
+  licenselink = "https://example.com"
+
+[taxonomies]
+    tag = "tags"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "posts"
+    title = "posts"
+    url = "/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "tags"
+    title = "tags"
+    url = "/tags/"
+    weight = 20   
+
+  [[menu.main]]
+    identifier = "about"
+    name = "about"
+    title = "about"
+    url = "/about/"
+    weight = 30
+     
+[permalinks]
+  posts = "/:title/"
+
+[markup.goldmark.renderer]
+  # Allows HTML in Markdown
+  unsafe = true
+  
+  
+  [author]
+  name = "torrytwooo"
+  homepage = "https://torrytw.ooo"
