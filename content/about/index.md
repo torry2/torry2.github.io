@@ -9,6 +9,6 @@ links:
 
 
 contact:  
-mail@torrytw.ooo
+mail@torry2.info
 
 
