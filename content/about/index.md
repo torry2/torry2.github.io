@@ -1,6 +1,9 @@
 ---
 title: "About"
 ---
+
+torry2 / torrytwooo  
+computers or something    
   ‎  
 links:  
 [htb](https://app.hackthebox.com/profile/1008122) | 
@@ -8,8 +11,7 @@ links:
 [git](https://github.com/torry2) |
 [twitter](https://twitter.com/torrytwooo)  
 
-
 contact:  
-mail@torry2.info
+mail@torrytw.ooo
 
 
