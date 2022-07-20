@@ -1,7 +1,7 @@
 ---
 title: "howtomywebsite"
 date: 2022-06-24T20:36:40+08:00
-tags: ["unpublished"]
+sort: ["unpublished"]
 draft: true
 ---
 
@@ -16,7 +16,7 @@ ensure publishDir = "docs" (in config.toml) as github pages reads either /docs o
   
   
 New Post:
-hugo new posts/post.md
+hugo new index/post.md
 write in md  
   
 draft: false  
@@ -40,3 +40,12 @@ hugo server
   
 markdown guide: https://www.markdownguide.org/cheat-sheet/
 hugo docs: https://gohugo.io/documentation/
+
+
+
+
+**** i changed posts -> index and tags -> sort
+identifiers changed and some modifications in themes/etch/_default/index.html /partials/index.html and /?
+en.toml leave as posts otherwise the time breaks 
+
+/content/_index.md is bio

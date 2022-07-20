@@ -2,10 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://torrytw.ooo/about/</loc>
+    <loc>https://torrytw.ooo/sort/all/</loc>
+    <lastmod>2022-07-20T20:55:33+08:00</lastmod>
   </url><url>
-    <loc>https://torrytw.ooo/tags/</loc>
+    <loc>https://torrytw.ooo/index/</loc>
+    <lastmod>2022-07-20T20:55:33+08:00</lastmod>
+  </url><url>
+    <loc>https://torrytw.ooo/index/post/</loc>
+    <lastmod>2022-07-20T20:55:33+08:00</lastmod>
+  </url><url>
+    <loc>https://torrytw.ooo/sort/</loc>
+    <lastmod>2022-07-20T20:55:33+08:00</lastmod>
   </url><url>
     <loc>https://torrytw.ooo/</loc>
+    <lastmod>2022-07-20T20:55:33+08:00</lastmod>
+  </url><url>
+    <loc>https://torrytw.ooo/contact/</loc>
   </url>
 </urlset>

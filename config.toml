@@ -18,32 +18,35 @@ pygmentsUseClasses = true
   licenselink = "https://github.com/torry2/torry2.github.io/blob/main/LICENSE"
 
 [taxonomies]
-    tag = "tags"
+    tag = "sort"
 
 [menu]
   [[menu.main]]
-    identifier = "posts"
-    name = "posts"
-    title = "posts"
-    url = "/"
+    identifier = "index"
+    name = "index"
+    title = "index"
+    url = "/index/"
     weight = 10
 
   [[menu.main]]
-    identifier = "tags"
-    name = "tags"
-    title = "tags"
-    url = "/tags/"
+    identifier = "sort"
+    name = "sort"
+    title = "sort"
+    url = "/sort/"
     weight = 20   
 
   [[menu.main]]
-    identifier = "about"
-    name = "about"
-    title = "about"
-    url = "/about/"
+    identifier = "contact"
+    name = "contact"
+    title = "contact"
+    url = "/contact/"
     weight = 30
      
 [permalinks]
-  posts = "/:title/"
+  
+  index = "/index/:title/"
+  
+
 
 [markup.goldmark.renderer]
   # html enabled in md
