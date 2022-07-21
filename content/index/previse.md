@@ -1,5 +1,7 @@
 ---
 title: "Previse"
+description: "Previse HTB Writeup"
+homepage: "https://torrytw.ooo"
 date: 2022-07-21T18:32:03+08:00
 sort: ["all", "htb", "writeup"]
 draft: false
