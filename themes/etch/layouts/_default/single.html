@@ -3,6 +3,11 @@
     <header id="post-header">
         <h1>{{ .Title }}</h1>
         <div>
+				{{ with .Params.images }}
+		{{ range first 1 . }}
+	<meta property="og:image" content="{{ . | absURL }}" />
+		{{ end }}
+	{{ end }}
         {{- if isset .Params "date" -}}
             {{ if eq .Lastmod .Date }}
                 <time>{{ .Date | time.Format (i18n "posts.created") }}</time>
