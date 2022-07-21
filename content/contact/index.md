@@ -7,7 +7,7 @@ mail [at] torrytw [dot] ooo
 
 -----
   
-matrix: @torry2:matrix.org
+matrix: @torry2:matrix.org  
 telegram: [null]  
   
 ----------------  
