@@ -454,4 +454,5 @@ fun box.
 
 ---------------- 
 
+Share via <a href="https://torry.link/index/previse">link</a>
 Return to the <a href="https://torrytw.ooo/index/">Index</a>
