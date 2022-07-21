@@ -5,6 +5,6 @@ sort: ["all"]
 draft: false
 ---
 
-Post Filler (temporary)
+This is a temporary page...  
 Return <a href="https://torrytw.ooo">home..</a>
 
