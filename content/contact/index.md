@@ -8,12 +8,11 @@ mail [at] torrytw [dot] ooo
 -----
   
 signal: 07700 185290  
-telegram:  
-matrix:  
+telegram: [null]      
+matrix: [null]     
   
 torry [at] braindeadfish [dot] com  
 (pgp preferred)  
-  
 /fishgp.txt
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
