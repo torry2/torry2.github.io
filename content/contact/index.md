@@ -7,14 +7,16 @@ mail [at] torrytw [dot] ooo
 
 -----
   
-signal: 07700 185290  
-telegram: [null]      
-matrix: [null]     
+matrix:  [null]  
+telegram: [null]  
   
+----------------  
 torry [at] braindeadfish [dot] com  
 (pgp preferred)  
-/fishgp.txt
-```
+
+<details open>
+<summary>PGP Key (<a href="https://torrytw.ooo/fishgp.txt">/fishgp.txt</a>)</summary>
+<br>
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 mQGNBGLY8/ABDACzqNnt4FC03VIMQEqPFQ3yP7IjtAewPDsxzZabBuwHWISu+I2o
 JGw5i9rSYn+EiT8DoH1dNv9D3hGKpx0BFCSfb1rc7R+uPrPx0G09MtKT5tS3WZ4X
@@ -54,7 +56,9 @@ CCjRQe8PZN5L5eicB+MWQ1Ed/3xlz0urqMTU3YCcgSghdJkWbg1YyYPC4C11FWpc
 zo/nXgVi4w==
 =hWZ5
 -----END PGP PUBLIC KEY BLOCK-----
-```
+</details>
+
+
 
 
 
