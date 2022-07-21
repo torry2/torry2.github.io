@@ -46,7 +46,8 @@ pygmentsUseClasses = true
   
   index = "/index/:title/"
   
-
+[markup.tableOfContents]
+  ordered = true
 
 [markup.goldmark.renderer]
   # html enabled in md
