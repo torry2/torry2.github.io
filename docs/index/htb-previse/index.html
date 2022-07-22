@@ -279,7 +279,7 @@ Using hashcat we can set the hash mode to 500 (md5) and use the <a href="https:/
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">gzip -c /var/log/apache2/access.log &gt; /var/backups/<span class="k">$(</span>date --date<span class="o">=</span><span class="s2">&#34;yesterday&#34;</span> +%Y%b%d<span class="k">)</span>_access.gz
 </span></span><span class="line"><span class="cl">gzip -c /var/www/file_access.log &gt; /var/backups/<span class="k">$(</span>date --date<span class="o">=</span><span class="s2">&#34;yesterday&#34;</span> +%Y%b%d<span class="k">)</span>_file_access.gz</span></span></code></pre></div>
-<p>This script is calling running the gzip command, however as this script is sudoable, the reference to gzip is a reference from the path, this may allow us to trick the script into running our own gzip command by exporting a new path of our choice. This is our vector for privilege escalation.</p>
+<p>The script is calling the <code>gzip</code> command, however it does not include the full path, so the command is called from our users current path. We can leverage this and hijack the path to run our own malicious gzip command, this is our vector for privilege escalation. This is possible due to sudo misconfiguration in which a <code>secure_path</code> is not set. &ndash; Credit: <a href="https://ghostccamm.com/">GhostCcamm</a></p>
 <p>The current path appears as:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$PATH</span>
 </span></span><span class="line"><span class="cl">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin</span></span></code></pre></div>
@@ -320,8 +320,7 @@ We can cat the contents of the file as the m4lwhere user.</p>
 fun box.
 <img src="/htbprevise/pwned.png" alt="pwned"></p>
 <hr>
-<p>Share via <a href="https://torry.link/index/previse">link</a><br>
-|
+<p>Share via <a href="https://torry.link/index/htb-previse">link</a><br>
 Return to the <a href="https://torrytw.ooo/index/">Index</a></p>
 </article>
 

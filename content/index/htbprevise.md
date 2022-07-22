@@ -374,7 +374,7 @@ gzip -c /var/log/apache2/access.log > /var/backups/$(date --date="yesterday" +%Y
 gzip -c /var/www/file_access.log > /var/backups/$(date --date="yesterday" +%Y%b%d)_file_access.gz
 {{< /highlight >}}
 
-This script is calling running the gzip command, however as this script is sudoable, the reference to gzip is a reference from the path, this may allow us to trick the script into running our own gzip command by exporting a new path of our choice. This is our vector for privilege escalation.
+The script is calling the `gzip` command, however it does not include the full path, so the command is called from our users current path. We can leverage this and hijack the path to run our own malicious gzip command, this is our vector for privilege escalation. This is possible due to sudo misconfiguration in which a `secure_path` is not set. -- Credit: <a href="https://ghostccamm.com/">GhostCcamm</a>
 
 The current path appears as:
 
@@ -455,6 +455,5 @@ fun box.
 
 ---------------- 
 
-Share via <a href="https://torry.link/index/previse">link</a>  
- | 
-Return to the <a href="https://torrytw.ooo/index/">Index</a>
+--> Share via <a href="https://torry.link/index/htb-previse">link</a>  
+--> Return to the <a href="https://torrytw.ooo/index/">Index</a>
